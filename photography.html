@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography | Your Name</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/photography.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">Your Name</a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="photography.html" class="active">Photography</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Photography</h1>
+                <p class="subtitle">Capturing moments and perspectives through the lens</p>
+            </div>
+        </section>
+
+        <section class="photo-categories">
+            <div class="container">
+                <div class="category-filters">
+                    <button class="category-btn active" data-category="all">All Photos</button>
+                    <button class="category-btn" data-category="landscape">Landscapes</button>
+                    <button class="category-btn" data-category="urban">Urban</button>
+                    <button class="category-btn" data-category="travel">Travel</button>
+                    <button class="category-btn" data-category="abstract">Abstract</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="photo-gallery">
+            <div class="container">
+                <div class="gallery-grid">
+                    <!-- Photo 1 -->
+                    <div class="gallery-item" data-category="landscape">
+                        <img src="https://picsum.photos/id/10/800/600" alt="Mountain Landscape">
+                        <div class="gallery-caption">
+                            <h3>Mountain Reflections</h3>
+                            <p>Swiss Alps, 2022</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Photo 2 -->
+                    <div class="gallery-item" data-category="urban">
+                        <img src="https://picsum.photos/id/26/800/600" alt="City Skyline">
+                        <div class="gallery-caption">
+                            <h3>Urban Geometry</h3>
+                            <p>Tokyo, Japan, 2021</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Photo 3 -->
+                    <div class="gallery-item" data-category="travel">
+                        <img src="https://picsum.photos/id/42/800/600" alt="Ancient Temple">
+                        <div class="gallery-caption">
+                            <h3>Temple at Dawn</h3>
+                            <p>Bali, Indonesia, 2019</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Photo 4 -->
+                    <div class="gallery-item" data-category="abstract">
+                        <img src="https://picsum.photos/id/96/800/600" alt="Abstract Pattern">
+                        <div class="gallery-caption">
+                            <h3>Patterns in Nature</h3>
+                            <p>Macro Photography, 2022</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Photo 5 -->
+                    <div class="gallery-item" data-category="landscape">
+                        <img src="https://picsum.photos/id/65/800/600" alt="Desert Landscape">
+                        <div class="gallery-caption">
+                            <h3>Desert Solitude</h3>
+                            <p>Sahara Desert, 2023</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Your Name</h3>
+                    <p>Data Scientist & Photographer</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="photography.html">Photography</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect</h4>
+                    <div class="social-icons">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Your Name. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/your-code.js" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 

@@ -1,0 +1,294 @@
+/* Blog Post Styles */
+
+/* Post Header */
+.post-header {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 12rem 0 4rem;
+}
+
+.post-meta {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.post-category {
+    background-color: var(--color-secondary);
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.post-date {
+    font-size: 1.4rem;
+    opacity: 0.8;
+}
+
+.post-header h1 {
+    color: white;
+    font-size: 4.8rem;
+    margin-bottom: 2rem;
+}
+
+.post-author {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.post-author img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.author-name {
+    font-weight: 600;
+    font-size: 1.8rem;
+}
+
+.author-title {
+    font-size: 1.4rem;
+    opacity: 0.8;
+}
+
+/* Featured Image */
+.post-featured-image {
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+}
+
+.post-featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Post Content */
+.post-content {
+    padding: 6rem 0;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.post-intro {
+    font-size: 2rem;
+    line-height: 1.6;
+    color: var(--color-gray);
+    margin-bottom: 4rem;
+    font-weight: 300;
+}
+
+.post-intro p {
+    margin-bottom: 0;
+}
+
+/* Table of Contents */
+.table-of-contents {
+    background-color: var(--color-light-gray);
+    padding: 2.5rem;
+    border-radius: 8px;
+    margin-bottom: 4rem;
+}
+
+.table-of-contents h3 {
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.table-of-contents ul {
+    list-style-type: none;
+}
+
+.table-of-contents ul li {
+    margin-bottom: 1rem;
+}
+
+.table-of-contents ul li a {
+    color: var(--color-primary);
+    font-weight: 400;
+    transition: var(--transition);
+}
+
+.table-of-contents ul li a:hover {
+    color: var(--color-secondary);
+    text-decoration: underline;
+}
+
+/* Sections */
+.post-content section {
+    margin-bottom: 6rem;
+}
+
+.post-content h2 {
+    font-size: 3.2rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-light-gray);
+}
+
+.post-content h3 {
+    font-size: 2.4rem;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.post-content p {
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    line-height: 1.8;
+}
+
+.post-content ul, .post-content ol {
+    margin-bottom: 2.5rem;
+    padding-left: 2.5rem;
+}
+
+.post-content li {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    line-height: 1.6;
+}
+
+/* Feature List */
+.feature-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.feature-list li {
+    position: relative;
+    padding-left: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.feature-list li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-secondary);
+    font-weight: bold;
+}
+
+/* Quote Block */
+.quote-block {
+    margin: 4rem 0;
+    padding: 3rem;
+    background-color: var(--color-light);
+    border-left: 5px solid var(--color-secondary);
+}
+
+.quote-block blockquote {
+    font-family: var(--font-heading);
+    font-size: 2.4rem;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--color-primary);
+    margin: 0;
+}
+
+.quote-block cite {
+    display: block;
+    margin-top: 1.5rem;
+    font-size: 1.6rem;
+    font-style: normal;
+    color: var(--color-gray);
+}
+
+/* Principle Cards */
+.principle-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.principle-image {
+    margin-top: 2rem;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* Color Palette Example */
+.color-palette-example {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.color-swatch {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+}
+
+/* Tools Grid */
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+}
+
+.tool-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Code Snippets */
+.code-snippet {
+    margin-top: 2rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.code-snippet pre {
+    margin: 0;
+    padding: 0;
+}
+
+.code-snippet code {
+    font-size: 1.4rem;
+    padding: 2rem;
+}
+
+/* Case Study */
+.case-study-image {
+    margin: 3rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.image-caption {
+    font-size: 1.4rem;
+    color: var(--color-gray);
+    text-align: center;
+    margin-top: 1rem;
+}
+
+/* Interactive Demo */
+.interactive-demo {
+    background-color: var(--color-light);
+    border-radius: 8px;
+    padding: 3rem;
+    margin: 3rem 0;
+}
+
+.demo-placeholder {
+    background-color: white;
+    border: 2px dashed var(--color-light-gray);
+    border-radius: 8px;
+    padding: 4rem;
+    text-align: center;
+    margin: 2rem 0 

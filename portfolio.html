@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Your Name</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">Your Name</a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="portfolio.html" class="active">Portfolio</a></li>
+                    <li><a href="photography.html">Photography</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Data Science Portfolio</h1>
+                <p class="subtitle">Selected projects showcasing my analytical and technical skills</p>
+            </div>
+        </section>
+
+        <section class="portfolio-filters">
+            <div class="container">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    <button class="filter-btn" data-filter="machine-learning">Machine Learning</button>
+                    <button class="filter-btn" data-filter="data-analysis">Data Analysis</button>
+                    <button class="filter-btn" data-filter="visualization">Visualization</button>
+                    <button class="filter-btn" data-filter="nlp">NLP</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="portfolio-grid">
+            <div class="container">
+                <div class="projects">
+                    <!-- Project 1 -->
+                    <div class="project-card" data-category="machine-learning">
+                        <div class="project-image">
+                            <img src="https://picsum.photos/800/600?random=4" alt="Predictive Model">
+                        </div>
+                        <div class="project-content">
+                            <h3>Predictive Model for Customer Churn</h3>
+                            <p class="project-tags">
+                                <span>Machine Learning</span>
+                                <span>Python</span>
+                                <span>Scikit-learn</span>
+                            </p>
+                            <p>Developed a machine learning model to predict customer churn for a telecommunications company, achieving 85% accuracy and identifying key factors contributing to customer attrition.</p>
+                            <div class="project-links">
+                                <a href="#" class="btn btn-sm">View Project</a>
+                                <a href="https://github.com/yourusername/project-repo" class="github-link" target="_blank">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="project-card" data-category="visualization">
+                        <div class="project-image">
+                            <img src="https://picsum.photos/800/600?random=5" alt="Data Visualization">
+                        </div>
+                        <div class="project-content">
+                            <h3>Interactive Dashboard for Urban Mobility</h3>
+                            <p class="project-tags">
+                                <span>Data Visualization</span>
+                                <span>D3.js</span>
+                                <span>Tableau</span>
+                            </p>
+                            <p>Created an interactive dashboard visualizing urban mobility patterns across major cities, helping transportation planners identify congestion hotspots and optimize public transit routes.</p>
+                            <div class="project-links">
+                                <a href="#" class="btn btn-sm">View Project</a>
+                                <a href="https://github.com/yourusername/project-repo" class="github-link" target="_blank">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="project-card" data-category="data-analysis">
+                        <div class="project-image">
+                            <img src="https://picsum.photos/800/600?random=6" alt="Data Analysis">
+                        </div>
+                        <div class="project-content">
+                            <h3>Economic Impact Analysis of COVID-19</h3>
+                            <p class="project-tags">
+                                <span>Data Analysis</span>
+                                <span>R</span>
+                                <span>Time Series</span>
+                            </p>
+                            <p>Analyzed economic indicators before and during the COVID-19 pandemic to quantify impact across different sectors and regions, providing insights for recovery planning.</p>
+                            <div class="project-links">
+                                <a href="#" class="btn btn-sm">View Project</a>
+                                <a href="https://github.com/yourusername/project-repo" class="github-link" target="_blank">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 4 -->
+                    <div class="project-card" data-category="nlp">
+                        <div class="project-image">
+                            <img src="https://picsum.photos/800/600?random=7" alt="NLP Project">
+                        </div>
+                        <div class="project-content">
+                            <h3>Sentiment Analysis of Product Reviews</h3>
+                            <p class="project-tags">
+                                <span>NLP</span>
+                                <span>Python</span>
+                                <span>BERT</span>
+                            </p>
+                            <p>Built a sentiment analysis model to classify product reviews, helping an e-commerce company identify customer satisfaction trends and product improvement opportunities.</p>
+                            <div class="project-links">
+                                <a href="#" class="btn btn-sm">View Project</a>
+                                <a href="https://github.com/yourusername/project-repo" class="github-link" target="_blank">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 5 -->
+                    <div class="project-card" data-category="machine-learning">
+                        <div class="project-image">
+                            <img src="https://picsum.photos/800/600?random=8" alt="Recommendation System">
+                        </div>
+                        <div class="project-content">
+                            <h3>Recommendation System for Digital Content</h3>
+                            <p class="project-tags">
+                                <span>Machine Learning</span>
+                                <span>Collaborative Filtering</span>
+                                <span>Python</span>
+                            </p>
+                            <p>Developed a recommendation system for a digital content platform, increasing user engagement by 22% and content consumption by 18% through personalized suggestions.</p>
+                            <div class="project-links">
+                                <a href="#" class="btn btn-sm">View Project</a>
+                                <a href="https://github.com/yourusername/project-repo" class="github-link" target="_blank">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 6 -->
+                    <div class="project-card" data-category="visualization">
+                        <div class="project-image">
+                            <img src="https://picsum.photos/800/600?random=9" alt="Network Analysis">
+                        </div>
+                        <div class="project-content">
+                            <h3>Social Network Analysis of Industry Connections</h3>
+                            <p class="project-tags">
+                                <span>Network Analysis</span>
+                                <span>Visualization</span>
+                                <span>Gephi</span>
+                            </p>
+                            <p>Analyzed and visualized professional networks within the tech industry, revealing key influencers and connection patterns that drive innovation and talent movement.</p>
+                            <div class="project-links">
+                                <a href="#" class="btn btn-sm">View Project</a>
+                                <a href="https://github.com/yourusername/project-repo" class="github-link" target="_blank">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Your Name</h3>
+                    <p>Data Scientist & Photographer</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="photography.html">Photography</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect</h4>
+                    <div class="social-icons">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Your Name. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/your-code.js" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+    <script src="js/portfolio.js"></script>
+</body>
+</html> 

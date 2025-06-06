@@ -137,16 +137,19 @@ const Index = () => {
         <div className="container mx-auto px-12 lg:px-32">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="font-playfair text-4xl md:text-6xl lg:text-7xl font-bold text-black mb-8 leading-tight">
-              Ideas.
+              A nook for my
               <br />
               <span className="font-bold" style={{ color: '#8B4513' }}>
-                Exploration
+                Explorations
               </span>
               <br />
-              Data Science.
+              & Ideas.
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 mb-12 leading-relaxed max-w-2xl mx-auto">
-            I help the curious wade through the noisy waters to their signal. Today, we swim but one day we shall drown. Until then, I try, therefore I am.
+            <p className="text-lg md:text-xl text-gray-600 mb-1 leading-relaxed max-w-2xl mx-auto">
+            I help the curious wade through the noisy waters to their signal.
+            </p>
+            <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
+            At least I try, therefore I am.
             </p>
           </div>
         </div>
@@ -190,13 +193,13 @@ const Index = () => {
                     Hi! I'm Aditya. Hailing from the little village of Bangalore, India, I dream of us humans becoming a multi-planetary species one day and walking around with chips in our brains to live life at 100x. Some days, I contemplate retiring young and getting into agriculture :D
                   </p>
                   <p>
-                    I care about understanding various phenomena to improve my mental models of reality. Serendipitously, I am also a data scientist (at <a href="https://sundial.so/" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80 transition-opacity" style={{ color: '#8B4513' }}>Sundial</a>) which I thoroughly enjoy and this makes it a little hard for me to fully comprehend the dreaded Monday blues.
+                    I care about understanding various phenomena to improve my mental models of reality. By happy chance, I am a data scientist (at <a href="https://sundial.so/" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80 transition-opacity" style={{ color: '#8B4513' }}>Sundial</a>), a role I enjoy a fair bit and this makes it a little hard for me to fully comprehend the dreaded Monday blues.
                   </p>
                   <p>
-                    When I'm not working or doing my chores, I spend my time reading, surfing the web, playing video games, and generally tinkering with stuff around the house. Maybe writing for this website will be another addition to the list.
+                    When I'm not working or doing my chores, I spend my time generally tinkering with stuff around the house, playing video games, reading and surfing the web. Maybe writing for this website will be another addition to the list.
                   </p>
                   <p>
-                    When I've got even more time on my hands, I drink and pontificate with my friends, travel, or just go for a long drive. I love cars and driving them. It's one of those passions that are not easily expressed through the written word.
+                    When I've got more time on my hands, I travel, wine, dine and pontificate with my friends. Often, I just go for a long drive. I love cars and driving them. It's one of those passions that are not easily expressed through the written word.
                   </p>
                   <p>
                     If any of this resonates with you, <a href="#connect" className="underline hover:opacity-80 transition-opacity" style={{ color: '#8B4513' }}>drop a note</a>. I'd love to chat.

@@ -163,9 +163,9 @@ const Index = () => {
       const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1-TyT9cmwE_TgWPKBH3apV3Sq-y1toge_SwCOM65J7nE/formResponse';
       
       const formDataToSubmit = new FormData();
-      formDataToSubmit.append('entry.1946675324', formData.name);
+      formDataToSubmit.append('entry.100699228', formData.name);
       formDataToSubmit.append('entry.2075906330', formData.email);
-      formDataToSubmit.append('entry.100699228', formData.comment);
+      formDataToSubmit.append('entry.1946675324', formData.comment);
 
       // Submit to Google Form using fetch with no-cors mode
       // This is the standard, safe way to integrate with Google Forms

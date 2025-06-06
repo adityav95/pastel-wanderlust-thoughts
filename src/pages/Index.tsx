@@ -159,91 +159,10 @@ const Index = () => {
     }
 
     try {
-      // Google Form submission with your specific form ID
-      const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1-TyT9cmwE_TgWPKBH3apV3Sq-y1toge_SwCOM65J7nE/formResponse';
+      // Dummy form - shows success message without submitting anywhere
+      // You can implement actual submission later
       
-      // Debug: Log what we're about to submit
-      console.log('=== FORM SUBMISSION DEBUG ===');
-      console.log('Form URL:', GOOGLE_FORM_URL);
-      console.log('Data being submitted:', {
-        'entry.100699228': formData.name,
-        'entry.2075906330': formData.email,
-        'entry.1946675324': formData.comment
-      });
-      
-      // Method 1: Try fetch with no-cors (popup-blocker friendly)
-      try {
-        const formDataToSubmit = new FormData();
-        formDataToSubmit.append('entry.100699228', formData.name);
-        formDataToSubmit.append('entry.2075906330', formData.email);
-        formDataToSubmit.append('entry.1946675324', formData.comment);
-
-        await fetch(GOOGLE_FORM_URL, {
-          method: 'POST',
-          body: formDataToSubmit,
-          mode: 'no-cors',
-        });
-
-        console.log('✅ Form submitted via fetch method (popup-blocker safe)');
-        
-      } catch (fetchError) {
-        console.error('❌ Fetch method failed, trying form submission:', fetchError);
-        
-        // Method 2: Fallback to form submission with popup blocker detection
-        const form = document.createElement('form');
-        form.action = GOOGLE_FORM_URL;
-        form.method = 'POST';
-        form.target = '_blank';
-        form.style.display = 'none';
-
-        // Add form fields
-        const nameField = document.createElement('input');
-        nameField.type = 'hidden';
-        nameField.name = 'entry.100699228';
-        nameField.value = formData.name;
-        form.appendChild(nameField);
-
-        const emailField = document.createElement('input');
-        emailField.type = 'hidden';
-        emailField.name = 'entry.2075906330';
-        emailField.value = formData.email;
-        form.appendChild(emailField);
-
-        const commentField = document.createElement('input');
-        commentField.type = 'hidden';
-        commentField.name = 'entry.1946675324';
-        commentField.value = formData.comment;
-        form.appendChild(commentField);
-
-        document.body.appendChild(form);
-        
-        // Try to submit and detect if popup was blocked
-        const newWindow = window.open('', '_blank');
-        if (newWindow) {
-          // Popup allowed, submit normally
-          form.submit();
-          newWindow.close(); // Close the blank window
-          console.log('✅ Form submitted via form method (popup allowed)');
-        } else {
-          // Popup blocked, inform user
-          console.warn('⚠️ Popup blocked - asking user to allow popups');
-          alert('Please allow popups for this site to submit the form, or try again.');
-          document.body.removeChild(form);
-          setIsSubmitting(false);
-          return;
-        }
-
-        // Clean up
-        setTimeout(() => {
-          if (document.body.contains(form)) {
-            document.body.removeChild(form);
-          }
-        }, 100);
-      }
-
-      console.log('=== END DEBUG ===');
-
-      // Success message
+      // Simple success message
       alert(`Thank you for your message, ${formData.name}! I'll get back to you soon.`);
       
       // Reset form
@@ -251,14 +170,8 @@ const Index = () => {
       setSubmitTime(null);
       
     } catch (error) {
-      // Enhanced error logging for debugging
-      console.error('❌ Form submission failed:', error);
-      console.error('Error details:', {
-        message: error.message,
-        name: error.name,
-        stack: error.stack
-      });
-      alert('There was an error submitting your message. Please try again.');
+      console.error('Error:', error);
+      alert('There was an error. Please try again.');
     } finally {
       setIsSubmitting(false);
     }

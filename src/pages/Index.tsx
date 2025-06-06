@@ -162,6 +162,15 @@ const Index = () => {
       // Google Form submission with your specific form ID
       const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1-TyT9cmwE_TgWPKBH3apV3Sq-y1toge_SwCOM65J7nE/formResponse';
       
+      // Debug: Log what we're about to submit
+      console.log('=== FORM SUBMISSION DEBUG ===');
+      console.log('Form URL:', GOOGLE_FORM_URL);
+      console.log('Data being submitted:', {
+        'entry.100699228': formData.name,
+        'entry.2075906330': formData.email,
+        'entry.1946675324': formData.comment
+      });
+      
       // Method 1: Try the more reliable iframe method first
       try {
         // Create a hidden iframe for form submission
@@ -196,6 +205,13 @@ const Index = () => {
         commentField.value = formData.comment;
         form.appendChild(commentField);
 
+        // Debug: Log the form before submission
+        console.log('Form element created:', form);
+        console.log('Form fields:', Array.from(form.elements).map(el => ({
+          name: (el as HTMLInputElement).name,
+          value: (el as HTMLInputElement).value
+        })));
+
         // Submit the form
         document.body.appendChild(form);
         form.submit();
@@ -208,12 +224,12 @@ const Index = () => {
           if (document.body.contains(iframe)) {
             document.body.removeChild(iframe);
           }
-        }, 1000);
+        }, 2000); // Increased timeout
 
-        console.log('Form submitted via iframe method');
+        console.log('✅ Form submitted via iframe method');
         
       } catch (iframeError) {
-        console.error('Iframe method failed, trying fetch:', iframeError);
+        console.error('❌ Iframe method failed, trying fetch:', iframeError);
         
         // Method 2: Fallback to fetch method
         const formDataToSubmit = new FormData();
@@ -221,17 +237,25 @@ const Index = () => {
         formDataToSubmit.append('entry.2075906330', formData.email);    // Email field
         formDataToSubmit.append('entry.1946675324', formData.comment);  // Comment field
 
+        // Debug: Log FormData contents
+        console.log('FormData contents:');
+        for (let [key, value] of formDataToSubmit.entries()) {
+          console.log(`${key}: ${value}`);
+        }
+
         await fetch(GOOGLE_FORM_URL, {
           method: 'POST',
           body: formDataToSubmit,
           mode: 'no-cors',
         });
 
-        console.log('Form submitted via fetch method');
+        console.log('✅ Form submitted via fetch method');
       }
 
+      console.log('=== END DEBUG ===');
+
       // Success message - we assume success since we can't read the response
-      alert(`Thank you for your message, ${formData.name}! I'll get back to you soon.`);
+      alert(`Thank you for your message, ${formData.name}! I'll get back to you soon. (Check console for debug info)`);
       
       // Reset form
       setFormData({ name: '', email: '', comment: '' });
@@ -239,7 +263,7 @@ const Index = () => {
       
     } catch (error) {
       // Enhanced error logging for debugging
-      console.error('Form submission failed:', error);
+      console.error('❌ Form submission failed:', error);
       console.error('Error details:', {
         message: error.message,
         name: error.name,

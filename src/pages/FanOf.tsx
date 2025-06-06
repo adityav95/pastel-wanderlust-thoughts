@@ -55,34 +55,34 @@ const FanOf = () => {
   const blogs = [
     {
       name: "Wait But Why",
-      description: "Tim Urban's deep dives into complex topics with stick figures and exceptional clarity. His posts on AI, space exploration, and human psychology have fundamentally shaped how I think about the future. The way he breaks down incredibly complex subjects into digestible, entertaining content is unmatched. His series on Neuralink and SpaceX gave me frameworks for understanding technological progress that I use daily. Every post feels like a masterclass in critical thinking and curiosity.",
+      description: "I ran into this blog when I wanted to understand Neuralink better. Tim Urban's style of an easy narrative gave me a good headstart on most of these before diving deeper when I wanted to. The blog covers a ton of other Musk-associated ventures including SpaceX and Tesla among a host of other topics covering religion, human behaviour and math. His ability to break down complex subjects into digestible, entertaining content with stick figures is unmatched.",
       url: "https://waitbutwhy.com",
       category: "Blog",
       domain: "waitbutwhy.com",
       color: "#4CAF50"
     },
     {
-      name: "Paul Graham",
-      description: "The co-founder of Y Combinator writes essays that cut straight to the heart of startups, technology, and life philosophy. His writing style is deceptively simple yet profound - every sentence feels carefully crafted. His insights on building companies, making money, and thinking independently have influenced my approach to problem-solving. Reading his work feels like getting mentorship from someone who's seen it all and distilled the lessons into pure wisdom.",
-      url: "https://paulgraham.com",
+      name: "The Oatmeal",
+      description: "Life, to me, is a complex mishmash of the mundane and the complex. Bursts of confidence contradicted by a certain awkwardness. To me, this blog captures these nuances perfectly. Made even better with Matthew Inman's comicstrip-style narration. The way he illustrates the absurdities and contradictions of everyday life through humor and comics is both relatable and deeply insightful.",
+      url: "https://theoatmeal.com",
       category: "Blog",
-      domain: "paulgraham.com",
+      domain: "theoatmeal.com",
       color: "#FF9800"
     },
     {
-      name: "Naval",
-      description: "Naval Ravikant's thoughts on wealth creation, happiness, and decision-making are like having a philosophical conversation with a modern sage. His ability to synthesize ancient wisdom with modern realities is remarkable. His tweetstorms and essays have taught me more about building wealth and finding contentment than most books. The depth of insight packed into short-form content is incredible - every piece demands multiple readings.",
-      url: "https://nav.al",
+      name: "Not Boring",
+      description: "Being in the analytics space means using Microsoft Excel at some point (for many if not most things at many if not most orgs). One of my colleagues shared this great read on how 'Excel never dies' which opened my mind to this great blog filled with tech, crypto and science must-reads. Packy McCormick's deep dives into technology trends and business strategy are both entertaining and incredibly informative.",
+      url: "https://www.notboring.co",
       category: "Blog",
-      domain: "nav.al",
+      domain: "notboring.co",
       color: "#2196F3"
     },
     {
-      name: "Stratechery",
-      description: "Ben Thompson's analysis of technology strategy and business models is unparalleled in the tech commentary space. His framework for understanding how technology companies succeed or fail has become essential reading for anyone in tech. The way he connects historical patterns with current events gives me a much clearer lens for evaluating new companies and technologies. His daily updates keep me sharp on what's actually important in the tech world.",
-      url: "https://stratechery.com",
+      name: "Bartosz Ciechanowski",
+      description: "We were figuring out how to design our user interfaces, charts and tables at Sundial when one of my colleagues ran into Bartosz's blog. Specifically, gears. It was so well done with dynamic animations that change based on your input that it made me want to go over all of the content. If you enjoy NYT's beautifully illustrated features, the graphics here is a more minimal, dare I say more beautiful version that puts you in a meditative state. There is something so enjoyable about user agency in graphics.",
+      url: "https://ciechanow.ski",
       category: "Blog",
-      domain: "stratechery.com",
+      domain: "ciechanow.ski",
       color: "#9C27B0"
     }
   ];

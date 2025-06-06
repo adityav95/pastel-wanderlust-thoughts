@@ -10,7 +10,21 @@ const Index = () => {
   });
   const [headerVisible, setHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitTime, setSubmitTime] = useState<number | null>(null);
+  const [formErrors, setFormErrors] = useState({
+    name: '',
+    email: '',
+    comment: ''
+  });
   const location = useLocation();
+
+  // Character limits
+  const COMMENT_MAX_LENGTH = 300;
+  const NAME_MAX_LENGTH = 100;
+
+  // Enhanced email validation regex
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,6 +61,13 @@ const Index = () => {
     }
   }, []);
 
+  // Set submit time when form is first interacted with (spam prevention)
+  useEffect(() => {
+    if (!submitTime && (formData.name || formData.email || formData.comment)) {
+      setSubmitTime(Date.now());
+    }
+  }, [formData, submitTime]);
+
   // Handle clicking home link while already on home page
   const handleHomeClick = () => {
     if (location.pathname === '/') {
@@ -54,19 +75,120 @@ const Index = () => {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const validateField = (name: string, value: string): string => {
+    switch (name) {
+      case 'name':
+        if (!value.trim()) return 'Name is required';
+        if (value.length > NAME_MAX_LENGTH) return `Name must be ${NAME_MAX_LENGTH} characters or less`;
+        if (!/^[a-zA-Z\s'-]+$/.test(value)) return 'Name can only contain letters, spaces, hyphens, and apostrophes';
+        return '';
+      
+      case 'email':
+        if (!value.trim()) return 'Email is required';
+        if (!emailRegex.test(value)) return 'Please enter a valid email address';
+        if (value.length > 254) return 'Email address is too long';
+        return '';
+      
+      case 'comment':
+        if (!value.trim()) return 'Comment is required';
+        if (value.length > COMMENT_MAX_LENGTH) return `Comment must be ${COMMENT_MAX_LENGTH} characters or less`;
+        if (value.trim().length < 10) return 'Comment must be at least 10 characters long';
+        // Check for spam-like patterns
+        if (/(.)\1{4,}/.test(value)) return 'Comment contains invalid repeated characters';
+        if ((value.match(/https?:\/\//g) || []).length > 2) return 'Comment cannot contain multiple links';
+        return '';
+      
+      default:
+        return '';
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    
+    // Prevent exceeding character limits
+    if (name === 'comment' && value.length > COMMENT_MAX_LENGTH) return;
+    if (name === 'name' && value.length > NAME_MAX_LENGTH) return;
+    
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+
+    // Clear error when user starts typing
+    if (formErrors[name as keyof typeof formErrors]) {
+      setFormErrors({
+        ...formErrors,
+        [name]: ''
+      });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Form submitted successfully
-    alert(`Thank you for your message, ${formData.name}!`);
-    // Reset form
-    setFormData({ name: '', email: '', comment: '' });
+    
+    // Prevent rapid submissions (spam protection)
+    if (submitTime && Date.now() - submitTime < 3000) {
+      alert('Please wait a moment before submitting.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    // Validate all fields
+    const errors = {
+      name: validateField('name', formData.name),
+      email: validateField('email', formData.email),
+      comment: validateField('comment', formData.comment)
+    };
+
+    setFormErrors(errors);
+
+    // Check if there are any errors
+    if (Object.values(errors).some(error => error !== '')) {
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Check honeypot field
+    const honeypot = (e.target as HTMLFormElement).website?.value;
+    if (honeypot) {
+      // Bot detected, silently reject
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      // Google Form submission with your specific form ID
+      const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1-TyT9cmwE_TgWPKBH3apV3Sq-y1toge_SwCOM65J7nE/formResponse';
+      
+      const formDataToSubmit = new FormData();
+      formDataToSubmit.append('entry.1946675324', formData.name);
+      formDataToSubmit.append('entry.2075906330', formData.email);
+      formDataToSubmit.append('entry.100699228', formData.comment);
+
+      // Submit to Google Form using fetch with no-cors mode
+      // This is the standard, safe way to integrate with Google Forms
+      await fetch(GOOGLE_FORM_URL, {
+        method: 'POST',
+        body: formDataToSubmit,
+        mode: 'no-cors', // Bypasses CORS restrictions
+      });
+
+      // Success message - we assume success since we can't read the response
+      alert(`Thank you for your message, ${formData.name}! I'll get back to you soon.`);
+      
+      // Reset form
+      setFormData({ name: '', email: '', comment: '' });
+      setSubmitTime(null);
+      
+    } catch (error) {
+      // Only log errors, not user data
+      console.error('Form submission failed');
+      alert('There was an error submitting your message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Custom Substack icon component with proper typing
@@ -137,16 +259,19 @@ const Index = () => {
         <div className="container mx-auto px-12 lg:px-32">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="font-playfair text-4xl md:text-6xl lg:text-7xl font-bold text-black mb-8 leading-tight">
-              Ideas.
+              A nook for my
               <br />
               <span className="font-bold" style={{ color: '#8B4513' }}>
-                Exploration
+                Explorations
               </span>
               <br />
-              Data Science.
+              & Ideas.
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 mb-12 leading-relaxed max-w-2xl mx-auto">
-            I help the curious wade through the noisy waters to their signal. Today, we swim but one day we shall drown. Until then, I try, therefore I am.
+            <p className="text-lg md:text-xl text-gray-600 mb-1 leading-relaxed max-w-2xl mx-auto">
+            I help the curious wade through the noisy waters to their signal.
+            </p>
+            <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
+            At least I try, therefore I am.
             </p>
           </div>
         </div>
@@ -190,13 +315,13 @@ const Index = () => {
                     Hi! I'm Aditya. Hailing from the little village of Bangalore, India, I dream of us humans becoming a multi-planetary species one day and walking around with chips in our brains to live life at 100x. Some days, I contemplate retiring young and getting into agriculture :D
                   </p>
                   <p>
-                    I care about understanding various phenomena to improve my mental models of reality. Serendipitously, I am also a data scientist (at <a href="https://sundial.so/" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80 transition-opacity" style={{ color: '#8B4513' }}>Sundial</a>) which I thoroughly enjoy and this makes it a little hard for me to fully comprehend the dreaded Monday blues.
+                    I care about understanding various phenomena to improve my mental models of reality. By happy chance, I am a data scientist (at <a href="https://sundial.so/" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80 transition-opacity" style={{ color: '#8B4513' }}>Sundial</a>), a role I enjoy a fair bit and this makes it a little hard for me to fully comprehend the dreaded Monday blues.
                   </p>
                   <p>
-                    When I'm not working or doing my chores, I spend my time reading, surfing the web, playing video games, and generally tinkering with stuff around the house. Maybe writing for this website will be another addition to the list.
+                    When I'm not working or doing my chores, I spend my time generally tinkering with stuff around the house, playing video games, reading and surfing the web. Maybe writing for this website will be another addition to the list.
                   </p>
                   <p>
-                    When I've got even more time on my hands, I drink and pontificate with my friends, travel, or just go for a long drive. I love cars and driving them. It's one of those passions that are not easily expressed through the written word.
+                    When I've got more time on my hands, I travel, wine, dine and pontificate with my friends. Often, I just go for a long drive. I love cars and driving them. It's one of those passions that are not easily expressed through the written word.
                   </p>
                   <p>
                     If any of this resonates with you, <a href="#connect" className="underline hover:opacity-80 transition-opacity" style={{ color: '#8B4513' }}>drop a note</a>. I'd love to chat.
@@ -246,7 +371,7 @@ const Index = () => {
               <form onSubmit={handleSubmit} className="space-y-6 bg-amber-50 p-6 md:p-8 rounded-lg shadow-lg border border-amber-200">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Name
+                    Name *
                   </label>
                   <input
                     id="name"
@@ -255,15 +380,26 @@ const Index = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-amber-50 focus:outline-none focus:ring-2 focus:border-amber-600"
-                    style={{ '--tw-ring-color': '#8B4513' } as React.CSSProperties}
+                    maxLength={NAME_MAX_LENGTH}
+                    className={`w-full px-3 py-2 border rounded-md shadow-sm bg-amber-50 focus:outline-none focus:ring-2 transition-colors ${
+                      formErrors.name 
+                        ? 'border-red-500 focus:border-red-500 focus:ring-red-200' 
+                        : 'border-gray-300 focus:border-amber-600'
+                    }`}
+                    style={{ '--tw-ring-color': formErrors.name ? '#fee2e2' : '#8B4513' } as React.CSSProperties}
                     placeholder="Your name"
                   />
+                  {formErrors.name && (
+                    <p className="mt-1 text-sm text-red-600">{formErrors.name}</p>
+                  )}
+                  <p className="mt-1 text-xs text-gray-500">
+                    {formData.name.length}/{NAME_MAX_LENGTH} characters
+                  </p>
                 </div>
                 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
+                    Email *
                   </label>
                   <input
                     id="email"
@@ -272,15 +408,22 @@ const Index = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-amber-50 focus:outline-none focus:ring-2 focus:border-amber-600"
-                    style={{ '--tw-ring-color': '#8B4513' } as React.CSSProperties}
+                    className={`w-full px-3 py-2 border rounded-md shadow-sm bg-amber-50 focus:outline-none focus:ring-2 transition-colors ${
+                      formErrors.email 
+                        ? 'border-red-500 focus:border-red-500 focus:ring-red-200' 
+                        : 'border-gray-300 focus:border-amber-600'
+                    }`}
+                    style={{ '--tw-ring-color': formErrors.email ? '#fee2e2' : '#8B4513' } as React.CSSProperties}
                     placeholder="your.email@example.com"
                   />
+                  {formErrors.email && (
+                    <p className="mt-1 text-sm text-red-600">{formErrors.email}</p>
+                  )}
                 </div>
                 
                 <div>
                   <label htmlFor="comment" className="block text-sm font-medium text-gray-700 mb-2">
-                    Comment
+                    Comment *
                   </label>
                   <textarea
                     id="comment"
@@ -289,27 +432,57 @@ const Index = () => {
                     onChange={handleInputChange}
                     required
                     rows={5}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-amber-50 focus:outline-none focus:ring-2 focus:border-amber-600 resize-vertical"
-                    style={{ '--tw-ring-color': '#8B4513' } as React.CSSProperties}
-                    placeholder="Share your thoughts, ideas, or questions..."
+                    maxLength={COMMENT_MAX_LENGTH}
+                    className={`w-full px-3 py-2 border rounded-md shadow-sm bg-amber-50 focus:outline-none focus:ring-2 resize-vertical transition-colors ${
+                      formErrors.comment 
+                        ? 'border-red-500 focus:border-red-500 focus:ring-red-200' 
+                        : 'border-gray-300 focus:border-amber-600'
+                    }`}
+                    style={{ '--tw-ring-color': formErrors.comment ? '#fee2e2' : '#8B4513' } as React.CSSProperties}
+                    placeholder="Share your thoughts, ideas, or questions... (minimum 10 characters)"
+                  />
+                  {formErrors.comment && (
+                    <p className="mt-1 text-sm text-red-600">{formErrors.comment}</p>
+                  )}
+                  <div className="mt-1 flex justify-between text-xs text-gray-500">
+                    <span>Minimum 10 characters</span>
+                    <span className={formData.comment.length > COMMENT_MAX_LENGTH - 50 ? 'text-orange-600' : ''}>
+                      {formData.comment.length}/{COMMENT_MAX_LENGTH} characters
+                    </span>
+                  </div>
+                </div>
+                
+                {/* Enhanced honeypot fields for spam prevention */}
+                <div style={{ display: 'none' }}>
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                  <input
+                    type="text"
+                    name="phone"
+                    tabIndex={-1}
+                    autoComplete="off"
                   />
                 </div>
                 
-                {/* Simple honeypot field to prevent basic bots */}
-                <input
-                  type="text"
-                  name="website"
-                  style={{ display: 'none' }}
-                  tabIndex={-1}
-                  autoComplete="off"
-                />
-                
                 <button 
                   type="submit"
-                  className="w-full bg-black hover:bg-gray-800 text-white py-3 px-4 rounded-md font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                  disabled={isSubmitting}
+                  className={`w-full py-3 px-4 rounded-md font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 ${
+                    isSubmitting 
+                      ? 'bg-gray-400 cursor-not-allowed text-white' 
+                      : 'bg-black hover:bg-gray-800 text-white'
+                  }`}
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
+                
+                <p className="text-xs text-gray-500 text-center">
+                  * Required fields. Your information will be kept private and secure.
+                </p>
               </form>
             </div>
           </div>

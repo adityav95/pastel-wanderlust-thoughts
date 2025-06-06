@@ -460,4 +460,32 @@ footer {
     .hero {
         height: 50vh;
     }
+}
+
+.category-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.category-btn {
+    padding: 0.8rem 1.5rem;
+    background-color: transparent;
+    border: 1px solid var(--color-gray);
+    border-radius: 30px;
+    color: var(--color-gray);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.category-btn.active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+.category-btn:hover:not(.active) {
+    background-color: var(--color-light-gray);
 } 

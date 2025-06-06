@@ -171,19 +171,29 @@ const Index = () => {
         'entry.1946675324': formData.comment
       });
       
-      // Method 1: Try the more reliable iframe method first
+      // Method 1: Try fetch with no-cors (popup-blocker friendly)
       try {
-        // Create a hidden iframe for form submission
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.name = 'form-iframe';
-        document.body.appendChild(iframe);
+        const formDataToSubmit = new FormData();
+        formDataToSubmit.append('entry.100699228', formData.name);
+        formDataToSubmit.append('entry.2075906330', formData.email);
+        formDataToSubmit.append('entry.1946675324', formData.comment);
 
-        // Create a form that targets the iframe
+        await fetch(GOOGLE_FORM_URL, {
+          method: 'POST',
+          body: formDataToSubmit,
+          mode: 'no-cors',
+        });
+
+        console.log('✅ Form submitted via fetch method (popup-blocker safe)');
+        
+      } catch (fetchError) {
+        console.error('❌ Fetch method failed, trying form submission:', fetchError);
+        
+        // Method 2: Fallback to form submission with popup blocker detection
         const form = document.createElement('form');
         form.action = GOOGLE_FORM_URL;
         form.method = 'POST';
-        form.target = 'form-iframe';
+        form.target = '_blank';
         form.style.display = 'none';
 
         // Add form fields
@@ -205,57 +215,36 @@ const Index = () => {
         commentField.value = formData.comment;
         form.appendChild(commentField);
 
-        // Debug: Log the form before submission
-        console.log('Form element created:', form);
-        console.log('Form fields:', Array.from(form.elements).map(el => ({
-          name: (el as HTMLInputElement).name,
-          value: (el as HTMLInputElement).value
-        })));
-
-        // Submit the form
         document.body.appendChild(form);
-        form.submit();
+        
+        // Try to submit and detect if popup was blocked
+        const newWindow = window.open('', '_blank');
+        if (newWindow) {
+          // Popup allowed, submit normally
+          form.submit();
+          newWindow.close(); // Close the blank window
+          console.log('✅ Form submitted via form method (popup allowed)');
+        } else {
+          // Popup blocked, inform user
+          console.warn('⚠️ Popup blocked - asking user to allow popups');
+          alert('Please allow popups for this site to submit the form, or try again.');
+          document.body.removeChild(form);
+          setIsSubmitting(false);
+          return;
+        }
 
-        // Clean up after a short delay
+        // Clean up
         setTimeout(() => {
           if (document.body.contains(form)) {
             document.body.removeChild(form);
           }
-          if (document.body.contains(iframe)) {
-            document.body.removeChild(iframe);
-          }
-        }, 2000); // Increased timeout
-
-        console.log('✅ Form submitted via iframe method');
-        
-      } catch (iframeError) {
-        console.error('❌ Iframe method failed, trying fetch:', iframeError);
-        
-        // Method 2: Fallback to fetch method
-        const formDataToSubmit = new FormData();
-        formDataToSubmit.append('entry.100699228', formData.name);      // Name field
-        formDataToSubmit.append('entry.2075906330', formData.email);    // Email field
-        formDataToSubmit.append('entry.1946675324', formData.comment);  // Comment field
-
-        // Debug: Log FormData contents
-        console.log('FormData contents:');
-        for (let [key, value] of formDataToSubmit.entries()) {
-          console.log(`${key}: ${value}`);
-        }
-
-        await fetch(GOOGLE_FORM_URL, {
-          method: 'POST',
-          body: formDataToSubmit,
-          mode: 'no-cors',
-        });
-
-        console.log('✅ Form submitted via fetch method');
+        }, 100);
       }
 
       console.log('=== END DEBUG ===');
 
-      // Success message - we assume success since we can't read the response
-      alert(`Thank you for your message, ${formData.name}! I'll get back to you soon. (Check console for debug info)`);
+      // Success message
+      alert(`Thank you for your message, ${formData.name}! I'll get back to you soon.`);
       
       // Reset form
       setFormData({ name: '', email: '', comment: '' });

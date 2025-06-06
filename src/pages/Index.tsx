@@ -162,18 +162,73 @@ const Index = () => {
       // Google Form submission with your specific form ID
       const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1-TyT9cmwE_TgWPKBH3apV3Sq-y1toge_SwCOM65J7nE/formResponse';
       
-      const formDataToSubmit = new FormData();
-      formDataToSubmit.append('entry.100699228', formData.name);
-      formDataToSubmit.append('entry.2075906330', formData.email);
-      formDataToSubmit.append('entry.1946675324', formData.comment);
+      // Method 1: Try the more reliable iframe method first
+      try {
+        // Create a hidden iframe for form submission
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.name = 'form-iframe';
+        document.body.appendChild(iframe);
 
-      // Submit to Google Form using fetch with no-cors mode
-      // This is the standard, safe way to integrate with Google Forms
-      await fetch(GOOGLE_FORM_URL, {
-        method: 'POST',
-        body: formDataToSubmit,
-        mode: 'no-cors', // Bypasses CORS restrictions
-      });
+        // Create a form that targets the iframe
+        const form = document.createElement('form');
+        form.action = GOOGLE_FORM_URL;
+        form.method = 'POST';
+        form.target = 'form-iframe';
+        form.style.display = 'none';
+
+        // Add form fields
+        const nameField = document.createElement('input');
+        nameField.type = 'hidden';
+        nameField.name = 'entry.100699228';
+        nameField.value = formData.name;
+        form.appendChild(nameField);
+
+        const emailField = document.createElement('input');
+        emailField.type = 'hidden';
+        emailField.name = 'entry.2075906330';
+        emailField.value = formData.email;
+        form.appendChild(emailField);
+
+        const commentField = document.createElement('input');
+        commentField.type = 'hidden';
+        commentField.name = 'entry.1946675324';
+        commentField.value = formData.comment;
+        form.appendChild(commentField);
+
+        // Submit the form
+        document.body.appendChild(form);
+        form.submit();
+
+        // Clean up after a short delay
+        setTimeout(() => {
+          if (document.body.contains(form)) {
+            document.body.removeChild(form);
+          }
+          if (document.body.contains(iframe)) {
+            document.body.removeChild(iframe);
+          }
+        }, 1000);
+
+        console.log('Form submitted via iframe method');
+        
+      } catch (iframeError) {
+        console.error('Iframe method failed, trying fetch:', iframeError);
+        
+        // Method 2: Fallback to fetch method
+        const formDataToSubmit = new FormData();
+        formDataToSubmit.append('entry.100699228', formData.name);      // Name field
+        formDataToSubmit.append('entry.2075906330', formData.email);    // Email field
+        formDataToSubmit.append('entry.1946675324', formData.comment);  // Comment field
+
+        await fetch(GOOGLE_FORM_URL, {
+          method: 'POST',
+          body: formDataToSubmit,
+          mode: 'no-cors',
+        });
+
+        console.log('Form submitted via fetch method');
+      }
 
       // Success message - we assume success since we can't read the response
       alert(`Thank you for your message, ${formData.name}! I'll get back to you soon.`);
@@ -183,8 +238,13 @@ const Index = () => {
       setSubmitTime(null);
       
     } catch (error) {
-      // Only log errors, not user data
-      console.error('Form submission failed');
+      // Enhanced error logging for debugging
+      console.error('Form submission failed:', error);
+      console.error('Error details:', {
+        message: error.message,
+        name: error.name,
+        stack: error.stack
+      });
       alert('There was an error submitting your message. Please try again.');
     } finally {
       setIsSubmitting(false);
